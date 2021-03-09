@@ -30,6 +30,7 @@ Enter 1 for debug mode and 0 for regular mode:
 Do you want to run the program in debug mode? Enter 1 for yes
 1
 ```
+
 2. Then you can enter your string of characters and integers separated by space like the following:
 ```
 1 2 3 C D E F
@@ -47,7 +48,7 @@ Do you want to run the program in debug mode? Enter 1 for yes
 Initialize the array: separate values by space
 5 A 9 M W 6 Z
 [ A, M, W, Z, 5, 9, 6,]
-``
+```
 
 ## Testing the second testcase
 ```
