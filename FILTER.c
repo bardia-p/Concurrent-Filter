@@ -80,6 +80,10 @@ int main ()
 	// initializes the array with the input values
 	for (int i=0; i<ARRAY_SIZE; i++){
 		shared_stuff->B[i] = str[2*i];
+		if (shared_stuff->B[i]<48 || (shared_stuff->B[i]>57 && shared_stuff->B[i]<65) || shared_stuff->B[i]>90){
+			printf("There was an error with the input\n");
+			exit(0);
+		}
 	}
 		
 	// the array of flags is set to 0 meaning the array is not complete
@@ -164,15 +168,19 @@ int main ()
 					shared_stuff->didSwap[i] = 0;
 					if (!semaphore_v(swap_id, i)) exit(EXIT_FAILURE);
 
-					// checks the ceil(ARRAY/3.0) elements that are allocated to each array (in this case) 
+					// checks the ceil(ARRAY_SIZE/3.0) elements that are allocated to each array (in this case) 
 					// if element j is a char and element j-1 is an integer it swaps them	
-					for (int j =2*i + ceil(ARRAY_SIZE/3.0)-1; j> 2*i-1; j--){	
-						if (shared_stuff->B[j]>=65 && j!=0 && shared_stuff->B[j-1]<65){
-							// waits elements j and j - 1
-							if (!semaphore_p(array_id, j)) exit(EXIT_FAILURE);
-							if (!semaphore_p(array_id, j-1)) exit(EXIT_FAILURE);
+					for (int j =2*i + ceil(ARRAY_SIZE/3.0)-1; j> 2*i-1 && j > 0; j--){	
+						// waits elements j and j - 1
+						if (!semaphore_p(array_id, j)) exit(EXIT_FAILURE);
+						if (!semaphore_p(array_id, j-1)) exit(EXIT_FAILURE);
 							
+						if (shared_stuff->B[j]>=65 && shared_stuff->B[j-1]<65){
 							// swaps the elements
+							if (debugMode){
+								printf("P%d swapped %c and %c\n", i+1, shared_stuff->B[j], shared_stuff->B[j-1]);
+							}
+						
 							swap_values(&shared_stuff->B[j], &shared_stuff->B[j-1]);
 							
 							// sets the isArrayDone flag to 0 since the array performed a swap operation so it is not done
@@ -180,34 +188,18 @@ int main ()
 							shared_stuff->isArrayDone[i] = 0;
 							if (!semaphore_v(done_id,i)) exit(EXIT_FAILURE);
 							
-							if (debugMode){
-								printf("P%d swapped %c and %c\n", i+1, shared_stuff->B[j-1], shared_stuff->B[j]);
-							}
-						
 							// the didSwap flag is set to 1							
 							if (!semaphore_p(swap_id, i)) exit(EXIT_FAILURE);
 							shared_stuff->didSwap[i] = 1;
 							if (!semaphore_v(swap_id, i)) exit(EXIT_FAILURE);
-
-							
-							if (!semaphore_v(array_id, j)) exit(EXIT_FAILURE);
-							if (!semaphore_v(array_id, j-1)) exit(EXIT_FAILURE);
- 	
 						}
+						// signals the elements
+						if (!semaphore_v(array_id, j)) exit(EXIT_FAILURE);
+						if (!semaphore_v(array_id, j-1)) exit(EXIT_FAILURE);
 					}
 					
 					// if the process did not perform any swap
 					if (!shared_stuff->didSwap[i]){
-						// considers the processs as done
-						if (!semaphore_p(done_id,i)) exit(EXIT_FAILURE);
-						shared_stuff->isArrayDone[i] = 1;
-						if (!semaphore_v(done_id,i)) exit(EXIT_FAILURE);	
-
-						if (debugMode){
-							printf("P%d Did not swap\n", i+1); 
-						}
-					
-						
 						// checks to see if the other processes are done as well
 						if (isDone(shared_stuff->isArrayDone)){
 							// detaches the memory
@@ -219,9 +211,18 @@ int main ()
 							// ends the child process
 							exit(0);
 						}
-					}
 
+						// considers the processs as done
+						if (!semaphore_p(done_id,i)) exit(EXIT_FAILURE);
+						shared_stuff->isArrayDone[i] = 1;
+						if (!semaphore_v(done_id,i)) exit(EXIT_FAILURE);	
+
+						if (debugMode){
+							printf("P%d Did not swap\n", i+1); 
+						}	
+					}
 				}
+
 			case -1:
 				perror("fork failed");
 				exit(1);
@@ -240,7 +241,7 @@ int main ()
 			printf("Final Result:\n");
 		}
 
-	
+		// prints the final array	
 		printf("[");
 		for (int i = 0; i < ARRAY_SIZE; i++){
 			printf(" %c,", shared_stuff->B[i]);
