@@ -1,0 +1,7 @@
+FILTER: FILTER.o
+	gcc	-o FILTER FILTER.o
+
+FILTER.o: FILTER.c FILTER.h
+	gcc	-c FILTER.c
+
+
