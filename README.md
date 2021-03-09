@@ -90,7 +90,7 @@ Initialize the array: separate values by space
 ```
 The array was left unchanged since it is already filered
 
-## Testing the program with an already filtered array
+### Testing the program with an already filtered array
 ```
 Do you want to run the program in debug mode? Enter 1 for yes
 0
@@ -184,7 +184,7 @@ Initialize the array: separate values by space
 There was an error with the input
 ```
 
-Using numbers are than digits/special characters:
+Using numbers other than digits/using special characters:
 ```
 Do you want to run the program in debug mode? Enter 1 for yes
 0
