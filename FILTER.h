@@ -4,9 +4,9 @@
 #define ARRAY_SIZE 7
 
 struct shared_use_st {
-	int isArrayDone[3];
-	char B[ARRAY_SIZE];
+	int arrayDone;
 	int didSwap[3];
+	char B[ARRAY_SIZE];
 };
 
 union semun {

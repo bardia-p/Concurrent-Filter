@@ -115,14 +115,14 @@ P2 swapped M and 9
 Process: 3
 P1 swapped M and 5
 P3 swapped Z and 6
-P2 swapped W and 9
-P1 Did not swap
+P3 swapped W and 9
 P2 swapped W and 5
 P3 swapped Z and 9
-P3 swapped Z and 5
+P1 Did not swap
+P2 swapped Z and 5
+P1 Did not swap
 P1 Did not swap
 P3 Did not swap
-P1 Did not swap
 P2 Did not swap
 Final Result:
 [ A, M, W, Z, 5, 9, 6,]
@@ -138,24 +138,23 @@ Initialize the array: separate values by space
 Process: 1
 Process: 2
 P1 Did not swap
-P1 Did not swap
-Process: 3
-P1 Did not swap
 P2 swapped C and 3
+Process: 3
 P1 swapped C and 2
 P3 swapped D and 3
 P1 swapped C and 1
+P1 Did not swap
 P3 swapped E and 3
 P3 swapped F and 3
-P1 Did not swap
 P2 swapped D and 2
 P3 swapped E and 2
-P1 swapped D and 1
 P3 swapped F and 2
+P3 Did not swap
+P1 swapped D and 1
+P3 Did not swap
+P1 Did not swap
 P2 swapped E and 1
-P1 Did not swap
 P3 swapped F and 1
-P1 Did not swap
 P3 Did not swap
 P1 Did not swap
 P2 Did not swap
