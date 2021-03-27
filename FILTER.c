@@ -28,6 +28,7 @@ static void del_semvalue(int sem_id);
 static int semaphore_p(int sem_id);
 static int semaphore_v(int sem_id);
 
+
 /* gets two points to char and swaps them */
 void swap_values (char* a, char* b){
 	char temp = *a;
@@ -76,10 +77,11 @@ int main ()
 	char str[100];
 	int debugMode; //keeps track of debugMode which is used to print extra information
 
-	printf("Do you want to run the program in debug mode? Enter 1 for yes\n");
-	scanf("%d", &debugMode);
+	printf("Do you want to run the program in debug mode? Enter 1 for yes and 0 for no\n");
+	
+	scanf("%[^\n]%*c", str);
 
-	scanf("%c");
+	debugMode = str[0] - 48;
 
 	printf("Initialize the array: separate values by space \n");
 
