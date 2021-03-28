@@ -16,7 +16,7 @@ Released on: 9/03/2021
 ```shell
 $ make
 ```
-2. After that an executable with the name of MMULT has been generated which  can be run using:
+2. After that an executable with the name of FILTER has been generated which  can be run using:
 ```shell
 $ ./FILTER
 ```
