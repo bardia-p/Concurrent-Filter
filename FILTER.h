@@ -1,6 +1,3 @@
-// Bardia Parmoun
-// 101143006
-
 #define ARRAY_SIZE 7
 
 struct shared_use_st {
